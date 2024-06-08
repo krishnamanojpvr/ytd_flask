@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTD</title>
+</head>
+<body>
+    
+    <form>
+        <input type="text" name="url" id="url" placeholder="Enter URL">
+        <button type="button" onclick="postUrl()">Download</button>
+    </form>
+
+    <video id="videoPlayer" width="320" height="240" controls style="display: none;">
+        <source id="videoSource" src="" type="video/mp4">
+    
+    </video>
+    
+    <button id="db" onclick="getVid()">Download Video</button>
+
+</body>
+
+<script>
+
+    async function postUrl(){
+        let url = document.getElementById('url').value;
+        let apiUrl = 'http://localhost:5000/download?url=' + encodeURIComponent(url);
+        console.log(apiUrl);
+        let res = await fetch(apiUrl, {
+            method: 'GET',
+        });
+        console.log(res);
+    }
+
+    async function getVid() {
+        let videoPlayer = document.getElementById('videoPlayer');
+        let videoSource = document.getElementById('videoSource');
+
+        videoSource.src = 'http://localhost:5000/video';
+        videoPlayer.style.display = 'block';
+        videoPlayer.load();
+    }
+    
+</script>
+</html>
